@@ -118,6 +118,19 @@
             </div>
         </div>
 
+
+        <div class="group p-8 rounded-[2.5rem] bg-white/5 border border-white/10 card-glow flex flex-col items-center text-center transition-all">
+            <span class="px-3 py-1 mb-4 rounded-full bg-cyan-500/20 text-cyan-400 text-[10px] font-bold uppercase">توثيق وإنجاز</span>
+            <span class="text-5xl mb-4">📁</span>
+            <h2 class="text-xl font-bold mb-3 text-cyan-400">وثيق</h2>
+            <p class="text-slate-400 text-xs leading-relaxed mb-6 h-16">منصة ذكية لتنظيم الوثائق والشواهد التربوية وعرضها بصورة احترافية وسريعة.</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://https://watheeq-edu-system.vercel.app/" class="qr-bg w-20 h-20 mb-6 shadow-lg shadow-cyan-500/10">
+            <div class="flex gap-2 mt-auto w-full">
+                <a href="https://wathiq.vercel.app" target="_blank" class="flex-1 bg-cyan-600 hover:bg-cyan-700 py-2 rounded-xl text-xs font-bold transition-all text-center">فتح الأداة</a>
+                <button onclick="showModal('m7')" class="flex-1 bg-white/10 hover:bg-white/20 py-2 rounded-xl text-xs font-bold border border-white/10">كيف تعمل؟</button>
+            </div>
+        </div>
+
     </main>
 
     <div id="m1" class="modal px-4" onclick="closeModal('m1')">
@@ -189,6 +202,19 @@
                 <li class="flex gap-3"><span>3️⃣</span> حَمّل التقرير النهائي لتقديمه للإدارة المدرسية.</li>
             </ul>
             <button onclick="closeModal('m6')" class="mt-8 w-full py-3 bg-rose-600 rounded-xl font-bold">فهمت ذلك</button>
+        </div>
+    </div>
+
+
+    <div id="m7" class="modal px-4" onclick="closeModal('m7')">
+        <div class="bg-slate-900 border border-cyan-500/30 p-8 rounded-[2.5rem] max-w-md w-full relative" onclick="event.stopPropagation()">
+            <h3 class="text-xl font-bold mb-6 text-cyan-400 text-center">دليل وثيق</h3>
+            <ul class="text-right space-y-4 text-slate-300 text-sm">
+                <li class="flex gap-3"><span>1️⃣</span> ادخل بيانات الوثيقة أو الشاهد التربوي المطلوب تنظيمه.</li>
+                <li class="flex gap-3"><span>2️⃣</span> صنّف الملفات حسب المجال أو المبادرة أو المهمة.</li>
+                <li class="flex gap-3"><span>3️⃣</span> استعرض الوثائق بشكل مرتب وشارِكها عند الحاجة.</li>
+            </ul>
+            <button onclick="closeModal('m7')" class="mt-8 w-full py-3 bg-cyan-600 rounded-xl font-bold">فهمت ذلك</button>
         </div>
     </div>
 
