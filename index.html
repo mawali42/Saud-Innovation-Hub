@@ -1,295 +1,721 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة الابتكار التربوي | أ. سعود المعولي</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Cairo', sans-serif; background-color: #0f172a; overflow-x: hidden; }
-        .bg-animate {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
-        }
-        .blob {
-            position: absolute; width: 500px; height: 500px; background: rgba(59, 130, 246, 0.1);
-            filter: blur(80px); border-radius: 50%; animation: move 20s infinite alternate;
-        }
-        @keyframes move { from { transform: translate(-10%, -10%); } to { transform: translate(20%, 20%); } }
-        .card-glow:hover { box-shadow: 0 0 30px rgba(59, 130, 246, 0.2); border-color: rgba(59, 130, 246, 0.4); transform: translateY(-5px); }
-        .qr-bg { background: white; padding: 5px; border-radius: 8px; transition: all 0.3s ease; }
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
-        .modal.active { display: flex; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>منصة الابتكار التربوي | أ. سعود المعولي</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #f6eedf;
+      --bg-2: #fff9ef;
+      --ink: #20312d;
+      --muted: #756a5d;
+      --forest: #16443c;
+      --forest-2:#0f302b;
+      --gold: #b88746;
+      --sand: #e8d8bd;
+      --glass: rgba(255,255,255,.58);
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      font-family:'Cairo', sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(184,135,70,.28), transparent 34rem),
+        radial-gradient(circle at 12% 18%, rgba(22,68,60,.18), transparent 30rem),
+        linear-gradient(135deg, #fbf3e4 0%, #efe0c5 42%, #f8f1e5 100%);
+      color: var(--ink);
+      overflow-x:hidden;
+      min-height:100vh;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(22,68,60,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(22,68,60,.04) 1px, transparent 1px);
+      background-size:42px 42px;
+      mask-image:linear-gradient(to bottom, rgba(0,0,0,.75), transparent 85%);
+      z-index:-2;
+    }
+
+    .ambient{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-1;
+      overflow:hidden;
+    }
+    .orb{
+      position:absolute;
+      width:30rem;
+      height:30rem;
+      border-radius:999px;
+      filter:blur(54px);
+      opacity:.34;
+      animation: drift 16s ease-in-out infinite alternate;
+    }
+    .orb.one{ background:#16443c; top:-9rem; right:-8rem; }
+    .orb.two{ background:#b88746; bottom:-10rem; left:-10rem; animation-delay:2s; }
+    .orb.three{ background:#d6b981; top:35%; left:15%; width:20rem; height:20rem; animation-delay:4s; }
+    @keyframes drift{
+      from{ transform:translate3d(0,0,0) scale(1); }
+      to{ transform:translate3d(2.5rem, -1.5rem, 0) scale(1.08); }
+    }
+
+    .shell{
+      max-width:1180px;
+      margin-inline:auto;
+      padding-inline:1.25rem;
+    }
+
+    .topbar{
+      position:sticky;
+      top:1rem;
+      z-index:60;
+      max-width:1120px;
+      margin:1rem auto 0;
+      padding:.7rem .85rem;
+      border:1px solid rgba(255,255,255,.55);
+      background:rgba(255,249,239,.72);
+      backdrop-filter:blur(18px);
+      box-shadow:0 18px 50px rgba(80,55,26,.10);
+      border-radius:999px;
+    }
+
+    .hero-card{
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.58);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.70), rgba(255,255,255,.36)),
+        radial-gradient(circle at 20% 15%, rgba(184,135,70,.22), transparent 25rem);
+      backdrop-filter: blur(22px);
+      border-radius:2.3rem;
+      box-shadow:0 28px 90px rgba(80,55,26,.14);
+    }
+    .hero-card::after{
+      content:"";
+      position:absolute;
+      inset:auto -8rem -12rem auto;
+      width:26rem;
+      height:26rem;
+      background:radial-gradient(circle, rgba(22,68,60,.18), transparent 65%);
+      border-radius:999px;
+    }
+
+    .hero-title{
+      background:linear-gradient(90deg, #16443c, #b88746, #284b43);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      letter-spacing:-.04em;
+    }
+
+    .badge-soft{
+      border:1px solid rgba(184,135,70,.26);
+      background:rgba(255,255,255,.44);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.65);
+    }
+
+    .stat-card{
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.55);
+      background:rgba(255,255,255,.46);
+      backdrop-filter:blur(16px);
+      border-radius:1.5rem;
+      box-shadow:0 16px 45px rgba(80,55,26,.10);
+    }
+    .stat-card::before{
+      content:"";
+      position:absolute;
+      inset:0 0 auto 0;
+      height:4px;
+      background:linear-gradient(90deg, #16443c, #b88746);
+      opacity:.75;
+    }
+
+    .toolbar{
+      border:1px solid rgba(255,255,255,.55);
+      background:rgba(255,255,255,.50);
+      backdrop-filter:blur(18px);
+      border-radius:1.6rem;
+      box-shadow:0 18px 60px rgba(80,55,26,.10);
+    }
+    .search-input{
+      width:100%;
+      outline:none;
+      color:var(--ink);
+      background:rgba(255,255,255,.58);
+      border:1px solid rgba(184,135,70,.18);
+      border-radius:1.1rem;
+      padding:.9rem 3rem .9rem 1rem;
+      transition:.25s ease;
+    }
+    .search-input:focus{
+      border-color:rgba(22,68,60,.45);
+      box-shadow:0 0 0 4px rgba(22,68,60,.10);
+      background:rgba(255,255,255,.78);
+    }
+
+    .filter-chip{
+      border:1px solid rgba(22,68,60,.16);
+      background:rgba(255,255,255,.52);
+      color:#35514b;
+      border-radius:999px;
+      padding:.55rem .9rem;
+      font-size:.78rem;
+      font-weight:800;
+      transition:.25s ease;
+      white-space:nowrap;
+    }
+    .filter-chip:hover,
+    .filter-chip.active{
+      background:linear-gradient(135deg, #16443c, #21695d);
+      color:#fff9ef;
+      border-color:transparent;
+      box-shadow:0 12px 32px rgba(22,68,60,.22);
+      transform:translateY(-2px);
+    }
+
+    .tool-card{
+      --accent:#16443c;
+      position:relative;
+      min-height:430px;
+      overflow:hidden;
+      border-radius:2rem;
+      border:1px solid rgba(255,255,255,.62);
+      background:
+        linear-gradient(160deg, rgba(255,255,255,.72), rgba(255,255,255,.38)),
+        radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 18%, transparent), transparent 17rem);
+      box-shadow:0 18px 55px rgba(80,55,26,.12);
+      transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      transform-style:preserve-3d;
+    }
+    .tool-card:hover{
+      border-color: color-mix(in srgb, var(--accent) 34%, white);
+      box-shadow:0 28px 80px rgba(80,55,26,.18), 0 0 0 1px color-mix(in srgb, var(--accent) 20%, transparent);
+      transform:translateY(-7px);
+    }
+    .tool-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(120deg, transparent 0%, rgba(255,255,255,.45) 40%, transparent 62%);
+      transform:translateX(110%);
+      transition:transform .8s ease;
+    }
+    .tool-card:hover::before{ transform:translateX(-110%); }
+
+    .tool-card .card-inner{
+      position:relative;
+      z-index:2;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      padding:1.55rem;
+    }
+
+    .pill{
+      width:max-content;
+      max-width:100%;
+      border-radius:999px;
+      border:1px solid color-mix(in srgb, var(--accent) 25%, white);
+      background:color-mix(in srgb, var(--accent) 12%, white);
+      color:var(--accent);
+      padding:.35rem .75rem;
+      font-size:.69rem;
+      font-weight:900;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.65);
+    }
+
+    .icon-3d{
+      width:5.2rem;
+      height:5.2rem;
+      display:grid;
+      place-items:center;
+      margin:1.1rem auto 1rem;
+      border-radius:1.65rem;
+      font-size:2.55rem;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.88), transparent 28%),
+        linear-gradient(145deg, color-mix(in srgb, var(--accent) 16%, white), color-mix(in srgb, var(--accent) 35%, white));
+      box-shadow:
+        0 18px 34px color-mix(in srgb, var(--accent) 18%, transparent),
+        inset -10px -12px 22px rgba(75,52,22,.10),
+        inset 8px 8px 16px rgba(255,255,255,.70);
+      transform:translateZ(28px) rotate(-3deg);
+      transition:.35s ease;
+    }
+    .tool-card:hover .icon-3d{
+      transform:translateZ(38px) rotate(4deg) translateY(-4px) scale(1.05);
+    }
+
+    .qr-wrap{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:.8rem;
+      margin-block:1.2rem;
+      padding:.75rem;
+      border-radius:1.15rem;
+      background:rgba(255,255,255,.46);
+      border:1px solid rgba(255,255,255,.55);
+    }
+    .qr-img{
+      width:4.2rem;
+      height:4.2rem;
+      padding:.28rem;
+      border-radius:.85rem;
+      background:#fff;
+      box-shadow:0 10px 22px rgba(80,55,26,.10);
+    }
+
+    .open-btn{
+      background:linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 78%, #b88746));
+      color:#fff9ef;
+      box-shadow:0 14px 30px color-mix(in srgb, var(--accent) 22%, transparent);
+    }
+    .open-btn:hover{ transform:translateY(-2px); filter:saturate(1.08); }
+    .guide-btn{
+      border:1px solid rgba(22,68,60,.15);
+      background:rgba(255,255,255,.58);
+      color:#29433d;
+    }
+    .guide-btn:hover{ background:#fff9ef; transform:translateY(-2px); }
+
+    .empty-state{ display:none; }
+    .empty-state.show{ display:block; }
+
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:100;
+      align-items:center;
+      justify-content:center;
+      padding:1rem;
+      background:rgba(17,24,20,.66);
+      backdrop-filter:blur(14px);
+    }
+    .modal.active{ display:flex; }
+    .modal-panel{
+      position:relative;
+      overflow:hidden;
+      width:min(94vw, 530px);
+      border:1px solid rgba(255,255,255,.55);
+      background:linear-gradient(145deg, rgba(255,249,239,.95), rgba(238,222,190,.92));
+      border-radius:2rem;
+      box-shadow:0 30px 95px rgba(0,0,0,.28);
+    }
+    .modal-panel::before{
+      content:"";
+      position:absolute;
+      width:15rem;
+      height:15rem;
+      border-radius:999px;
+      background:color-mix(in srgb, var(--accent) 22%, transparent);
+      filter:blur(26px);
+      top:-6rem;
+      left:-5rem;
+    }
+    .modal-content{ position:relative; z-index:2; padding:1.6rem; }
+
+    .floating-suite{
+      position:relative;
+      min-height:320px;
+      perspective:1000px;
+    }
+    .float-card{
+      position:absolute;
+      border-radius:1.6rem;
+      border:1px solid rgba(255,255,255,.55);
+      background:rgba(255,255,255,.46);
+      backdrop-filter:blur(16px);
+      box-shadow:0 22px 60px rgba(80,55,26,.14);
+      transform-style:preserve-3d;
+      animation: bob 4.8s ease-in-out infinite;
+    }
+    .float-card.main{ inset:2rem 3rem auto auto; width:18rem; min-height:12.5rem; padding:1.2rem; transform:rotateY(-10deg) rotateX(6deg); }
+    .float-card.small{ top:13.5rem; right:0; width:12rem; padding:1rem; animation-delay:.8s; }
+    .float-card.qr{ top:11rem; left:1rem; width:9rem; padding:1rem; animation-delay:1.4s; }
+    @keyframes bob{
+      0%,100%{ translate:0 0; }
+      50%{ translate:0 -12px; }
+    }
+
+    .shine-text{ color:#fff9ef; text-shadow:0 2px 14px rgba(0,0,0,.18); }
+
+    @media (max-width: 900px){
+      .topbar{ margin-inline:1rem; border-radius:1.25rem; }
+      .floating-suite{ min-height:260px; margin-top:1rem; }
+      .float-card.main{ right:50%; translate:50% 0; width:min(18rem, 90vw); }
+      .float-card.small{ right:1rem; top:12.2rem; }
+      .float-card.qr{ left:1rem; top:12rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *, *::before, *::after{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+    }
+  </style>
 </head>
-<body class="text-white">
+<body>
+  <div class="ambient" aria-hidden="true">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+  </div>
 
-    <div class="bg-animate">
-        <div class="blob" style="top: -10%; left: -10%; background: rgba(59, 130, 246, 0.15);"></div>
-        <div class="blob" style="bottom: -10%; right: -10%; background: rgba(16, 185, 129, 0.1);"></div>
-    </div>
-
-    <header class="py-16 px-4 text-center">
-        <div class="inline-block px-4 py-1 mb-6 bg-blue-500/10 rounded-full border border-blue-500/20 text-blue-400 text-xs font-bold animate-pulse tracking-widest">
-            VISION 2040 🇴🇲 رؤية عُمان
+  <nav class="topbar">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+      <a href="#top" class="flex items-center gap-3">
+        <span class="w-11 h-11 rounded-2xl grid place-items-center text-2xl shadow-lg" style="background:linear-gradient(135deg,#16443c,#b88746);">✨</span>
+        <div>
+          <div class="font-black text-sm md:text-base text-[#16443c]">منصة الابتكار التربوي</div>
+          <div class="text-[11px] text-[#756a5d]">أدوات رقمية للمدرسة والمعلم</div>
         </div>
-        <h1 class="text-4xl md:text-6xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-emerald-400 to-indigo-500 leading-tight">
-            منصة الابتكار التربوي
+      </a>
+      <div class="flex items-center gap-2 text-[11px] font-extrabold text-[#16443c]">
+        <a href="#tools" class="px-4 py-2 rounded-full hover:bg-white/60 transition">الأدوات</a>
+        <a href="https://wa.me/96896669096" target="_blank" rel="noopener" class="px-4 py-2 rounded-full text-white shadow-lg" style="background:linear-gradient(135deg,#16443c,#21695d);">تواصل واتساب</a>
+      </div>
+    </div>
+  </nav>
+
+  <header id="top" class="shell pt-14 md:pt-20 pb-10">
+    <div class="hero-card grid lg:grid-cols-[1.08fr_.92fr] gap-8 p-6 md:p-10 lg:p-12 items-center">
+      <div class="relative z-10">
+        <div class="badge-soft inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-black text-[#16443c] mb-6">
+          <span>🇴🇲</span>
+          <span>رؤية عُمان 2040 | AI & Web Tools</span>
+        </div>
+        <h1 class="hero-title text-4xl md:text-6xl lg:text-7xl font-black leading-[1.15] mb-6">
+          منصة الابتكار التربوي
         </h1>
-        <div class="mt-8 flex flex-col items-center gap-2">
-            <span class="font-bold text-2xl text-white underline decoration-blue-500/50 decoration-4 underline-offset-8">أ. سعود المعولي</span>
-            <span class="text-slate-400 text-sm font-mono tracking-widest mt-2">saud22@moe.om</span>
-            <div class="mt-4 px-4 py-1 bg-white/5 rounded-full border border-white/10 text-xs text-slate-500 tracking-wider">مدرسة الباسط للتعليم الأساسي 🏫</div>
+        <p class="text-[#5f554a] text-base md:text-lg leading-9 max-w-2xl font-medium mb-8">
+          واجهة موحدة تجمع تطبيقاتك التربوية في تجربة عصرية، منظمة، وسهلة الوصول للمعلمين والإدارة المدرسية.
+        </p>
+        <div class="flex flex-wrap items-center gap-3 mb-8">
+          <span class="px-4 py-2 rounded-full bg-white/55 border border-white/60 text-sm font-extrabold text-[#16443c]">أ. سعود المعولي</span>
+          <span class="px-4 py-2 rounded-full bg-white/45 border border-white/60 text-sm font-bold text-[#756a5d]">saud22@moe.om</span>
+          <span class="px-4 py-2 rounded-full bg-white/45 border border-white/60 text-sm font-bold text-[#756a5d]">مدرسة الباسط للتعليم الأساسي</span>
         </div>
-    </header>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href="#tools" class="open-btn inline-flex justify-center items-center gap-2 rounded-2xl px-6 py-3 font-black transition">
+            <span>🚀</span> استعراض الأدوات
+          </a>
+          <button onclick="focusSearch()" class="guide-btn inline-flex justify-center items-center gap-2 rounded-2xl px-6 py-3 font-black transition">
+            <span>🔍</span> بحث سريع
+          </button>
+        </div>
+      </div>
 
-    <section class="max-w-4xl mx-auto mb-16 grid grid-cols-3 gap-4 px-6 text-center">
-        <div class="p-4 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
-            <div class="text-2xl font-black text-blue-400">9</div>
-            <div class="text-[10px] text-slate-400 uppercase">أدوات ذكية</div>
+      <div class="floating-suite relative z-10 hidden sm:block" aria-hidden="true">
+        <div class="float-card main">
+          <div class="h-10 w-10 rounded-2xl grid place-items-center text-2xl mb-4" style="background:linear-gradient(135deg,#efe0c5,#fff9ef); box-shadow:inset 0 1px 0 #fff;">🗂️</div>
+          <div class="font-black text-2xl text-[#16443c] mb-2">9 أدوات ذكية</div>
+          <p class="text-sm text-[#756a5d] leading-7">بوابة أنيقة للوصول إلى التحضير، التحليل، التقويم، اللجان، وملفات المعلمين.</p>
+          <div class="mt-5 h-2 rounded-full bg-[#e8d8bd] overflow-hidden">
+            <div class="h-full w-[92%] rounded-full" style="background:linear-gradient(90deg,#16443c,#b88746);"></div>
+          </div>
         </div>
-        <div class="p-4 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
-            <div class="text-2xl font-black text-emerald-400">100%</div>
-            <div class="text-[10px] text-slate-400 uppercase">دقة تربوية</div>
+        <div class="float-card small">
+          <div class="text-3xl mb-2">📊</div>
+          <div class="font-black text-[#16443c]">تحليلات أسرع</div>
+          <div class="text-xs text-[#756a5d] mt-1">تصنيف + بحث + QR</div>
         </div>
-        <div class="p-4 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
-            <div class="text-2xl font-black text-purple-400">AI & Web</div>
-            <div class="text-[10px] text-slate-400 uppercase">دعم تقني ومؤسسي</div>
+        <div class="float-card qr text-center">
+          <div class="mx-auto w-16 h-16 rounded-2xl bg-white grid place-items-center shadow-inner text-3xl">✨</div>
+          <div class="mt-3 text-xs font-black text-[#16443c]">واجهة تفاعلية</div>
         </div>
-    </section>
+      </div>
+    </div>
+  </header>
 
-    <main class="max-w-6xl mx-auto px-6 pb-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        
-        <div class="group p-8 rounded-[2.5rem] bg-white/5 border border-white/10 card-glow flex flex-col items-center text-center transition-all">
-            <span class="px-3 py-1 mb-4 rounded-full bg-blue-500/20 text-blue-400 text-[10px] font-bold uppercase">ذكاء اصطناعي</span>
-            <span class="text-5xl mb-4">✍️</span>
-            <h2 class="text-xl font-bold mb-3 text-blue-400">المفكر التربوي</h2>
-            <p class="text-slate-400 text-sm leading-relaxed mb-6 h-16">نسخة اللغة العربية لتوليد تحضير ذكي متكامل وفق معايير الوزارة.</p>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://arabic-lesson-planner.vercel.app" class="qr-bg w-20 h-20 mb-6 shadow-lg shadow-blue-500/10">
-            <div class="flex gap-2 mt-auto w-full">
-                <a href="https://arabic-lesson-planner.vercel.app" target="_blank" class="flex-1 bg-blue-600 hover:bg-blue-700 py-2 rounded-xl text-xs font-bold transition-all text-center">فتح الأداة</a>
-                <button onclick="showModal('m1')" class="flex-1 bg-white/10 hover:bg-white/20 py-2 rounded-xl text-xs font-bold border border-white/10">كيف تعمل؟</button>
-            </div>
-        </div>
+  <section class="shell pb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="stat-card p-5 text-center">
+        <div id="appsCount" class="text-4xl font-black text-[#16443c]">9</div>
+        <div class="text-xs text-[#756a5d] font-bold mt-1">أدوات وتطبيقات</div>
+      </div>
+      <div class="stat-card p-5 text-center">
+        <div class="text-4xl font-black text-[#b88746]">100%</div>
+        <div class="text-xs text-[#756a5d] font-bold mt-1">تنظيم وتجربة وصول</div>
+      </div>
+      <div class="stat-card p-5 text-center">
+        <div class="text-4xl font-black text-[#21695d]">3D</div>
+        <div class="text-xs text-[#756a5d] font-bold mt-1">أيقونات وتفاعل بصري</div>
+      </div>
+    </div>
+  </section>
 
-        <div class="group p-8 rounded-[2.5rem] bg-white/5 border border-white/10 card-glow flex flex-col items-center text-center transition-all">
-            <span class="px-3 py-1 mb-4 rounded-full bg-purple-500/20 text-purple-400 text-[10px] font-bold uppercase">ذكاء اصطناعي</span>
-            <span class="text-5xl mb-4">🌍</span>
-            <h2 class="text-xl font-bold mb-3 text-purple-400">المفكر الشامل</h2>
-            <p class="text-slate-400 text-sm leading-relaxed mb-6 h-16">أداة تحضير ذكية تدعم كافة المواد الدراسية والمجالات التعليمية المختلفة.</p>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://universal-lesson-planner.vercel.app" class="qr-bg w-20 h-20 mb-6 shadow-lg shadow-purple-500/10">
-            <div class="flex gap-2 mt-auto w-full">
-                <a href="https://universal-lesson-planner.vercel.app" target="_blank" class="flex-1 bg-purple-600 hover:bg-purple-700 py-2 rounded-xl text-xs font-bold transition-all text-center">فتح الأداة</a>
-                <button onclick="showModal('m2')" class="flex-1 bg-white/10 hover:bg-white/20 py-2 rounded-xl text-xs font-bold border border-white/10">كيف تعمل?</button>
-            </div>
+  <section id="tools" class="shell py-8">
+    <div class="toolbar p-4 md:p-5 mb-8">
+      <div class="grid lg:grid-cols-[1fr_auto] gap-4 items-center">
+        <div class="relative">
+          <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xl">🔎</span>
+          <input id="searchInput" class="search-input" type="search" placeholder="ابحث باسم الأداة أو التصنيف..." oninput="renderTools()" />
         </div>
-
-        <div class="group p-8 rounded-[2.5rem] bg-white/5 border border-white/10 card-glow flex flex-col items-center text-center transition-all">
-            <span class="px-3 py-1 mb-4 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold uppercase">إشراف تربوي</span>
-            <span class="text-5xl mb-4">🔎</span>
-            <h2 class="text-xl font-bold mb-3 text-emerald-400">المفكر الإشرافي</h2>
-            <p class="text-slate-400 text-sm leading-relaxed mb-6 h-16">نظام متخصص لتحليل الزيارات الصفية وتقديم توصيات مهنية فورية.</p>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://supervisory-observation-pro.vercel.app" class="qr-bg w-20 h-20 mb-6 shadow-lg shadow-emerald-500/10">
-            <div class="flex gap-2 mt-auto w-full">
-                <a href="https://supervisory-observation-pro.vercel.app" target="_blank" class="flex-1 bg-emerald-600 hover:bg-emerald-700 py-2 rounded-xl text-xs font-bold transition-all text-center">فتح الأداة</a>
-                <button onclick="showModal('m3')" class="flex-1 bg-white/10 hover:bg-white/20 py-2 rounded-xl text-xs font-bold border border-white/10">كيف تعمل؟</button>
-            </div>
-        </div>
-
-        <div class="group p-8 rounded-[2.5rem] bg-white/5 border border-white/10 card-glow flex flex-col items-center text-center transition-all">
-            <span class="px-3 py-1 mb-4 rounded-full bg-indigo-500/20 text-indigo-400 text-[10px] font-bold uppercase">تطوير مهني</span>
-            <span class="text-5xl mb-4">🧠</span>
-            <h2 class="text-xl font-bold mb-3 text-indigo-400">بوصلة القيادة</h2>
-            <p class="text-slate-400 text-sm leading-relaxed mb-6 h-16">تحليل أنماط التفكير (هيرمان وأوسكار) لتعميق فهم التطور المهني والذاتي.</p>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://herrmann-brain-analysis.vercel.app" class="qr-bg w-20 h-20 mb-6 shadow-lg shadow-indigo-500/10">
-            <div class="flex gap-2 mt-auto w-full">
-                <a href="https://herrmann-brain-analysis.vercel.app" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-700 py-2 rounded-xl text-xs font-bold transition-all text-center">فتح الأداة</a>
-                <button onclick="showModal('m4')" class="flex-1 bg-white/10 hover:bg-white/20 py-2 rounded-xl text-xs font-bold border border-white/10">كيف تعمل؟</button>
-            </div>
-        </div>
-
-        <div class="group p-8 rounded-[2.5rem] bg-white/5 border border-white/10 card-glow flex flex-col items-center text-center transition-all">
-            <span class="px-3 py-1 mb-4 rounded-full bg-amber-500/20 text-amber-400 text-[10px] font-bold uppercase">قياس وتقويم</span>
-            <span class="text-5xl mb-4">📊</span>
-            <h2 class="text-xl font-bold mb-3 text-amber-400">محلل الورقة</h2>
-            <p class="text-slate-400 text-xs leading-relaxed mb-6 h-16">نظام رقمي لتحليل مواصفات الورقة لضمان دقة المعايير الوزارية بعُمان.</p>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://moeom.my.canva.site/saudex" class="qr-bg w-20 h-20 mb-6 shadow-lg shadow-amber-500/10">
-            <div class="flex gap-2 mt-auto w-full">
-                <a href="https://moeom.my.canva.site/saudex" target="_blank" class="flex-1 bg-amber-600 hover:bg-amber-700 py-2 rounded-xl text-xs font-bold transition-all text-center">فتح الأداة</a>
-                <button onclick="showModal('m5')" class="flex-1 bg-white/10 hover:bg-white/20 py-2 rounded-xl text-xs font-bold border border-white/10">كيف تعمل؟</button>
-            </div>
-        </div>
-
-        <div class="group p-8 rounded-[2.5rem] bg-white/5 border border-white/10 card-glow flex flex-col items-center text-center transition-all">
-            <span class="px-3 py-1 mb-4 rounded-full bg-rose-500/20 text-rose-400 text-[10px] font-bold uppercase">إحصاء تربوي</span>
-            <span class="text-5xl mb-4">📈</span>
-            <h2 class="text-xl font-bold mb-3 text-rose-400">حاسبة الإتقان</h2>
-            <p class="text-slate-400 text-xs leading-relaxed mb-6 h-16">أداة لتقديم تحليل فوري لنتائج الطلاب ونسب الإتقان المطلوبة للإدارة.</p>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://moeom.my.canva.site/saudqan" class="qr-bg w-20 h-20 mb-6 shadow-lg shadow-rose-500/10">
-            <div class="flex gap-2 mt-auto w-full">
-                <a href="https://moeom.my.canva.site/saudqan" target="_blank" class="flex-1 bg-rose-600 hover:bg-rose-700 py-2 rounded-xl text-xs font-bold transition-all text-center">فتح الأداة</a>
-                <button onclick="showModal('m6')" class="flex-1 bg-white/10 hover:bg-white/20 py-2 rounded-xl text-xs font-bold border border-white/10">كيف تعمل؟</button>
-            </div>
-        </div>
-
-        <div class="group p-8 rounded-[2.5rem] bg-white/5 border border-white/10 card-glow flex flex-col items-center text-center transition-all">
-            <span class="px-3 py-1 mb-4 rounded-full bg-cyan-500/20 text-cyan-400 text-[10px] font-bold uppercase">تحليل استراتيجي</span>
-            <span class="text-5xl mb-4">📁</span>
-            <h2 class="text-xl font-bold mb-3 text-cyan-400">نظام وثيق الذكي</h2>
-            <p class="text-slate-400 text-xs leading-relaxed mb-6 h-16">نظام لاستخراج البيانات وتحليلها بعمق من مختلف الوثائق والاستمارات والتقارير التربوية لتحويلها لرؤى فورية.</p>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://watheeq-edu-system.vercel.app/" class="qr-bg w-20 h-20 mb-6 shadow-lg shadow-cyan-500/10">
-            <div class="flex gap-2 mt-auto w-full">
-                <a href="https://watheeq-edu-system.vercel.app/" target="_blank" class="flex-1 bg-cyan-600 hover:bg-cyan-700 py-2 rounded-xl text-xs font-bold transition-all text-center">فتح الأداة</a>
-                <button onclick="showModal('m7')" class="flex-1 bg-white/10 hover:bg-white/20 py-2 rounded-xl text-xs font-bold border border-white/10">كيف تعمل؟</button>
-            </div>
-        </div>
-
-        <div class="group p-8 rounded-[2.5rem] bg-white/5 border border-white/10 card-glow flex flex-col items-center text-center transition-all">
-            <span class="px-3 py-1 mb-4 rounded-full bg-orange-500/20 text-orange-400 text-[10px] font-bold uppercase">إدارة وتنظيم</span>
-            <span class="text-5xl mb-4">📋</span>
-            <h2 class="text-xl font-bold mb-3 text-orange-400">نظام متقن للجان</h2>
-            <p class="text-slate-400 text-xs leading-relaxed mb-6 h-16">نظام رقمي مبتكر لتوزيع المعلمين والمراقبين على لجان الامتحانات بدقة وعدالة التوزيع.</p>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://invigilation-app-exam.vercel.app/" class="qr-bg w-20 h-20 mb-6 shadow-lg shadow-orange-500/10">
-            <div class="flex gap-2 mt-auto w-full">
-                <a href="https://invigilation-app-exam.vercel.app/" target="_blank" class="flex-1 bg-orange-600 hover:bg-orange-700 py-2 rounded-xl text-xs font-bold transition-all text-center">فتح الأداة</a>
-                <button onclick="showModal('m8')" class="flex-1 bg-white/10 hover:bg-white/20 py-2 rounded-xl text-xs font-bold border border-white/10">كيف تعمل؟</button>
-            </div>
-        </div>
-
-        <div class="group p-8 rounded-[2.5rem] bg-white/5 border border-white/10 card-glow flex flex-col items-center text-center transition-all">
-            <span class="px-3 py-1 mb-4 rounded-full bg-teal-500/20 text-teal-400 text-[10px] font-bold uppercase">إدارة مدرسية</span>
-            <span class="text-5xl mb-4">🗂️</span>
-            <h2 class="text-xl font-bold mb-3 text-teal-400">بوابة ملفات أعمال المعلمين</h2>
-            <p class="text-slate-400 text-xs leading-relaxed mb-6 h-16">منصة رقمية لحفظ وتنظيم ملفات أعمال المعلمين ورفعها ومتابعتها من قبل الإدارة المدرسية.</p>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https%3A%2F%2Falbasit-teachers-portfolio.vercel.app%2F" class="qr-bg w-20 h-20 mb-6 shadow-lg shadow-teal-500/10">
-            <div class="flex gap-2 mt-auto w-full">
-                <a href="https://albasit-teachers-portfolio.vercel.app/" target="_blank" class="flex-1 bg-teal-600 hover:bg-teal-700 py-2 rounded-xl text-xs font-bold transition-all text-center">فتح الأداة</a>
-                <button onclick="showModal('m9')" class="flex-1 bg-white/10 hover:bg-white/20 py-2 rounded-xl text-xs font-bold border border-white/10">كيف تعمل؟</button>
-            </div>
-        </div>
-
-    </main>
-
-    <div id="m1" class="modal px-4" onclick="closeModal('m1')">
-        <div class="bg-slate-900 border border-blue-500/30 p-8 rounded-[2.5rem] max-w-md w-full relative" onclick="event.stopPropagation()">
-            <h3 class="text-xl font-bold mb-6 text-blue-400 text-center">دليل المفكر التربوي</h3>
-            <ul class="text-right space-y-4 text-slate-300 text-sm">
-                <li class="flex gap-3"><span>1️⃣</span> ادخل عنوان الدرس والأهداف التعليمية.</li>
-                <li class="flex gap-3"><span>2️⃣</span> اختر الصف والمستوى الدراسي المستهدف.</li>
-                <li class="flex gap-3"><span>3️⃣</span> سيقوم النظام بتوليد كامل لعناصر الدرس ذكياً.</li>
-            </ul>
-            <button onclick="closeModal('m1')" class="mt-8 w-full py-3 bg-blue-600 rounded-xl font-bold">فهمت ذلك</button>
-        </div>
+        <div id="filters" class="flex gap-2 overflow-x-auto pb-1 lg:pb-0"></div>
+      </div>
     </div>
 
-    <div id="m2" class="modal px-4" onclick="closeModal('m2')">
-        <div class="bg-slate-900 border border-purple-500/30 p-8 rounded-[2.5rem] max-w-md w-full relative" onclick="event.stopPropagation()">
-            <h3 class="text-xl font-bold mb-6 text-purple-400 text-center">دليل المفكر الشامل</h3>
-            <ul class="text-right space-y-4 text-slate-300 text-sm">
-                <li class="flex gap-3"><span>1️⃣</span> حدد المادة الدراسية والموضوع المراد تحضيره.</li>
-                <li class="flex gap-3"><span>2️⃣</span> اختر استراتيجية التدريس المناسبة من القائمة.</li>
-                <li class="flex gap-3"><span>3️⃣</span> انسخ خطة الدرس الجاهزة وقم بمواءمتها صفياً.</li>
-            </ul>
-            <button onclick="closeModal('m2')" class="mt-8 w-full py-3 bg-purple-600 rounded-xl font-bold">فهمت ذلك</button>
-        </div>
+    <div id="toolsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <div id="emptyState" class="empty-state text-center py-14">
+      <div class="text-5xl mb-4">🔍</div>
+      <h3 class="text-xl font-black text-[#16443c]">لا توجد نتائج مطابقة</h3>
+      <p class="text-[#756a5d] mt-2">جرّب كلمة بحث أخرى أو اختر جميع الأدوات.</p>
     </div>
+  </section>
 
-    <div id="m3" class="modal px-4" onclick="closeModal('m3')">
-        <div class="bg-slate-900 border border-emerald-500/30 p-8 rounded-[2.5rem] max-w-md w-full relative" onclick="event.stopPropagation()">
-            <h3 class="text-xl font-bold mb-6 text-emerald-400 text-center">دليل المفكر الإشرافي</h3>
-            <ul class="text-right space-y-4 text-slate-300 text-sm">
-                <li class="flex gap-3"><span>1️⃣</span> عَبّئ بيانات الزيارة الصفية والملاحظات الفنية.</li>
-                <li class="flex gap-3"><span>2️⃣</span> اطلب من النظام تحليل نقاط القوة وفرص التحسين.</li>
-                <li class="flex gap-3"><span>3️⃣</span> استخرج تقرير المداولة الإشرافية الفوري للمعلم.</li>
-            </ul>
-            <button onclick="closeModal('m3')" class="mt-8 w-full py-3 bg-emerald-600 rounded-xl font-bold">فهمت ذلك</button>
-        </div>
+  <footer class="mt-12 border-t border-white/50 bg-white/25 backdrop-blur-sm">
+    <div class="shell py-10 flex flex-col md:flex-row items-center justify-between gap-5 text-center md:text-right">
+      <div>
+        <p class="font-black text-[#16443c]">تم التطوير بواسطة أ. سعود المعولي © 2026</p>
+        <p class="text-xs text-[#756a5d] mt-1">منصة تعليمية شخصية تجمع أدوات الابتكار التربوي في مكان واحد.</p>
+      </div>
+      <a href="https://wa.me/96896669096" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-black shadow-lg" style="background:linear-gradient(135deg,#16443c,#21695d);">
+        <span>💬</span> WhatsApp Contact
+      </a>
     </div>
+  </footer>
 
-    <div id="m4" class="modal px-4" onclick="closeModal('m4')">
-        <div class="bg-slate-900 border border-indigo-500/30 p-8 rounded-[2.5rem] max-w-md w-full relative" onclick="event.stopPropagation()">
-            <h3 class="text-xl font-bold mb-6 text-indigo-400 text-center">دليل بوصلة القيادة</h3>
-            <ul class="text-right space-y-4 text-slate-300 text-sm">
-                <li class="flex gap-3"><span>1️⃣</span> سَجل الدخول وأَجب على مقياس "هيرمان".</li>
-                <li class="flex gap-3"><span>2️⃣</span> حَلل "اللقطة الدماغية" الخاصة بنمط تفكيرك.</li>
-                <li class="flex gap-3"><span>3️⃣</span> اتبع منهجية (أوسكار) لرسم خطة نموك المهني.</li>
-            </ul>
-            <button onclick="closeModal('m4')" class="mt-8 w-full py-3 bg-indigo-600 rounded-xl font-bold">فهمت ذلك</button>
+  <div id="modal" class="modal" onclick="closeModal()">
+    <div id="modalPanel" class="modal-panel" onclick="event.stopPropagation()">
+      <div class="modal-content">
+        <button onclick="closeModal()" class="absolute left-5 top-5 w-9 h-9 rounded-full bg-white/60 hover:bg-white font-black text-[#16443c] transition">×</button>
+        <div id="modalIcon" class="icon-3d mx-auto"></div>
+        <h3 id="modalTitle" class="text-2xl font-black text-center text-[#16443c] mb-2"></h3>
+        <p id="modalDesc" class="text-center text-[#756a5d] leading-8 mb-5"></p>
+        <div id="modalSteps" class="space-y-3 mb-6"></div>
+        <div class="flex gap-3">
+          <a id="modalLink" target="_blank" rel="noopener" class="open-btn flex-1 text-center rounded-2xl px-5 py-3 font-black transition">فتح الأداة</a>
+          <button onclick="closeModal()" class="guide-btn flex-1 rounded-2xl px-5 py-3 font-black transition">إغلاق</button>
         </div>
+      </div>
     </div>
+  </div>
 
-    <div id="m5" class="modal px-4" onclick="closeModal('m5')">
-        <div class="bg-slate-900 border border-amber-500/30 p-8 rounded-[2.5rem] max-w-md w-full relative" onclick="event.stopPropagation()">
-            <h3 class="text-xl font-bold mb-6 text-amber-400 text-center">دليل محلل الاختبارات</h3>
-            <ul class="text-right space-y-4 text-slate-300 text-sm">
-                <li class="flex gap-3"><span>1️⃣</span> افتح الأداة عبر Canva وادخل مواصفات الاختبار.</li>
-                <li class="flex gap-3"><span>2️⃣</span> قارن الأسئلة بجدول المواصفات والوزن النسبي.</li>
-                <li class="flex gap-3"><span>3️⃣</span> تأكد من جودة الورقة الامتحانية وفق المعايير.</li>
-            </ul>
-            <button onclick="closeModal('m5')" class="mt-8 w-full py-3 bg-amber-600 rounded-xl font-bold">فهمت ذلك</button>
+  <script>
+    const tools = [
+      {
+        id:'arabic-planner',
+        title:'المفكر التربوي',
+        category:'ذكاء اصطناعي',
+        icon:'✍️',
+        color:'#2f6fde',
+        url:'https://arabic-lesson-planner.vercel.app',
+        description:'نسخة اللغة العربية لتوليد تحضير ذكي متكامل وفق معايير الوزارة.',
+        steps:['أدخل عنوان الدرس والأهداف التعليمية.','اختر الصف والمستوى الدراسي المستهدف.','استخرج خطة درس منظمة وقابلة للتعديل.']
+      },
+      {
+        id:'universal-planner',
+        title:'المفكر الشامل',
+        category:'ذكاء اصطناعي',
+        icon:'🌍',
+        color:'#7c3aed',
+        url:'https://universal-lesson-planner.vercel.app',
+        description:'أداة تحضير ذكية تدعم كافة المواد الدراسية والمجالات التعليمية المختلفة.',
+        steps:['حدد المادة الدراسية والموضوع.','اختر استراتيجية التدريس المناسبة.','انسخ الخطة الجاهزة وموائمها صفياً.']
+      },
+      {
+        id:'supervisory',
+        title:'المفكر الإشرافي',
+        category:'إشراف تربوي',
+        icon:'🔎',
+        color:'#0f9f75',
+        url:'https://supervisory-observation-pro.vercel.app',
+        description:'نظام متخصص لتحليل الزيارات الصفية وتقديم توصيات مهنية فورية.',
+        steps:['عبّئ بيانات الزيارة الصفية.','حلّل نقاط القوة وفرص التحسين.','استخرج تقرير المداولة الإشرافية.']
+      },
+      {
+        id:'brain',
+        title:'بوصلة القيادة',
+        category:'تطوير مهني',
+        icon:'🧠',
+        color:'#4f46e5',
+        url:'https://herrmann-brain-analysis.vercel.app',
+        description:'تحليل أنماط التفكير هيرمان وأوسكار لتعميق فهم التطور المهني والذاتي.',
+        steps:['سجل الدخول وأجب عن المقياس.','حلل اللقطة الدماغية لنمط التفكير.','ابنِ خطة نمو مهني وفق النتائج.']
+      },
+      {
+        id:'exam-paper',
+        title:'محلل الورقة',
+        category:'قياس وتقويم',
+        icon:'📊',
+        color:'#b88746',
+        url:'https://moeom.my.canva.site/saudex',
+        description:'نظام رقمي لتحليل مواصفات الورقة لضمان دقة المعايير الوزارية بعُمان.',
+        steps:['افتح الأداة وادخل مواصفات الاختبار.','قارن الأسئلة بجدول المواصفات.','تأكد من جودة الورقة الامتحانية.']
+      },
+      {
+        id:'mastery',
+        title:'حاسبة الإتقان',
+        category:'إحصاء تربوي',
+        icon:'📈',
+        color:'#e11d48',
+        url:'https://moeom.my.canva.site/saudqan',
+        description:'أداة لتقديم تحليل فوري لنتائج الطلاب ونسب الإتقان المطلوبة للإدارة.',
+        steps:['أدخل درجات الطلاب في الحقول المخصصة.','استعرض نسب الإتقان والرسوم فوراً.','حمّل التقرير النهائي للإدارة.']
+      },
+      {
+        id:'watheeq',
+        title:'نظام وثيق الذكي',
+        category:'تحليل استراتيجي',
+        icon:'📁',
+        color:'#0891b2',
+        url:'https://watheeq-edu-system.vercel.app/',
+        description:'نظام لاستخراج البيانات وتحليلها بعمق من الوثائق والاستمارات والتقارير التربوية.',
+        steps:['ارفع الوثيقة أو الاستمارة المطلوبة.','اختر نوع التحليل المناسب.','حوّل البيانات إلى رؤى وتوصيات فورية.']
+      },
+      {
+        id:'committees',
+        title:'نظام متقن للجان',
+        category:'إدارة وتنظيم',
+        icon:'📋',
+        color:'#ea580c',
+        url:'https://invigilation-app-exam.vercel.app/',
+        description:'نظام رقمي مبتكر لتوزيع المعلمين والمراقبين على لجان الامتحانات بدقة وعدالة.',
+        steps:['أدخل قوائم المعلمين المتوفرين.','حدد أعداد اللجان والفترات الزمنية.','احصل على توزيع عادل ومنظم آلياً.']
+      },
+      {
+        id:'teachers-portfolio',
+        title:'بوابة ملفات أعمال المعلمين',
+        category:'إدارة مدرسية',
+        icon:'🗂️',
+        color:'#16443c',
+        url:'https://albasit-teachers-portfolio.vercel.app/',
+        description:'منصة رقمية لحفظ وتنظيم ملفات أعمال المعلمين ورفعها ومتابعتها من قبل الإدارة المدرسية.',
+        steps:['يدخل المعلم للبوابة ويرفع ملفاته المطلوبة.','تظهر الملفات للإدارة بشكل منظم حسب البيانات.','يمكن متابعة الملفات وإدارتها رقمياً من لوحة الإدارة.'],
+        featured:true
+      }
+    ];
+
+    let activeCategory = 'الكل';
+
+    const categoryLabels = ['الكل', ...new Set(tools.map(t => t.category))];
+    const grid = document.getElementById('toolsGrid');
+    const filters = document.getElementById('filters');
+    const emptyState = document.getElementById('emptyState');
+    const searchInput = document.getElementById('searchInput');
+    document.getElementById('appsCount').textContent = tools.length;
+
+    function createFilters(){
+      filters.innerHTML = categoryLabels.map(cat => `
+        <button class="filter-chip ${cat === activeCategory ? 'active' : ''}" onclick="setCategory('${cat}')">
+          ${cat}
+        </button>
+      `).join('');
+    }
+
+    function setCategory(cat){
+      activeCategory = cat;
+      createFilters();
+      renderTools();
+    }
+
+    function getFilteredTools(){
+      const query = (searchInput.value || '').trim().toLowerCase();
+      return tools.filter(tool => {
+        const matchesCategory = activeCategory === 'الكل' || tool.category === activeCategory;
+        const haystack = `${tool.title} ${tool.category} ${tool.description}`.toLowerCase();
+        return matchesCategory && haystack.includes(query);
+      });
+    }
+
+    function qrUrl(url){
+      return `https://api.qrserver.com/v1/create-qr-code/?size=130x130&margin=12&data=${encodeURIComponent(url)}`;
+    }
+
+    function renderTools(){
+      const filtered = getFilteredTools();
+      grid.innerHTML = filtered.map(tool => `
+        <article class="tool-card" style="--accent:${tool.color}" onmousemove="tiltCard(event, this)" onmouseleave="resetTilt(this)">
+          <div class="card-inner">
+            <div class="flex items-center justify-between gap-3">
+              <span class="pill">${tool.category}</span>
+              ${tool.featured ? '<span class="pill" style="--accent:#b88746">إضافة مميزة</span>' : ''}
+            </div>
+            <div class="icon-3d" aria-hidden="true">${tool.icon}</div>
+            <h2 class="text-2xl font-black text-center mb-3" style="color:${tool.color}">${tool.title}</h2>
+            <p class="text-center text-sm leading-7 text-[#756a5d] font-medium min-h-[72px]">${tool.description}</p>
+            <div class="qr-wrap">
+              <div class="text-right">
+                <div class="text-xs font-black text-[#16443c]">QR للوصول السريع</div>
+                <div class="text-[11px] text-[#756a5d] mt-1">امسح الرمز وافتح الأداة مباشرة</div>
+              </div>
+              <img src="${qrUrl(tool.url)}" alt="QR ${tool.title}" class="qr-img" loading="lazy" />
+            </div>
+            <div class="grid grid-cols-2 gap-3 mt-auto">
+              <a href="${tool.url}" target="_blank" rel="noopener" class="open-btn text-center rounded-2xl px-4 py-3 font-black text-sm transition">فتح الأداة</a>
+              <button onclick="showModal('${tool.id}')" class="guide-btn rounded-2xl px-4 py-3 font-black text-sm transition">كيف تعمل؟</button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+      emptyState.classList.toggle('show', filtered.length === 0);
+    }
+
+    function tiltCard(event, card){
+      const rect = card.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -4;
+      const rotateY = ((x - centerX) / centerX) * 4;
+      card.style.transform = `translateY(-7px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    }
+
+    function resetTilt(card){
+      card.style.transform = '';
+    }
+
+    function showModal(id){
+      const tool = tools.find(t => t.id === id);
+      if(!tool) return;
+      const modal = document.getElementById('modal');
+      const panel = document.getElementById('modalPanel');
+      panel.style.setProperty('--accent', tool.color);
+      document.getElementById('modalIcon').textContent = tool.icon;
+      document.getElementById('modalTitle').textContent = tool.title;
+      document.getElementById('modalDesc').textContent = tool.description;
+      document.getElementById('modalLink').href = tool.url;
+      document.getElementById('modalSteps').innerHTML = tool.steps.map((step, index) => `
+        <div class="flex gap-3 items-start rounded-2xl bg-white/48 border border-white/60 p-3">
+          <span class="w-8 h-8 shrink-0 rounded-xl grid place-items-center text-white font-black" style="background:${tool.color}">${index + 1}</span>
+          <p class="text-sm leading-7 text-[#4d443b] font-bold">${step}</p>
         </div>
-    </div>
+      `).join('');
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
 
-    <div id="m6" class="modal px-4" onclick="closeModal('m6')">
-        <div class="bg-slate-900 border border-rose-500/30 p-8 rounded-[2.5rem] max-w-md w-full relative" onclick="event.stopPropagation()">
-            <h3 class="text-xl font-bold mb-6 text-rose-400 text-center">دليل حاسبة الإتقان</h3>
-            <ul class="text-right space-y-4 text-slate-300 text-sm">
-                <li class="flex gap-3"><span>1️⃣</span> ادخل درجات الطلاب في الحقول المخصصة.</li>
-                <li class="flex gap-3"><span>2️⃣</span> استعرض الرسوم البيانية لنسبة الإتقان فوراً.</li>
-                <li class="flex gap-3"><span>3️⃣</span> حَمّل التقرير النهائي لتقديمه للإدارة المدرسية.</li>
-            </ul>
-            <button onclick="closeModal('m6')" class="mt-8 w-full py-3 bg-rose-600 rounded-xl font-bold">فهمت ذلك</button>
-        </div>
-    </div>
+    function closeModal(){
+      document.getElementById('modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
 
-    <div id="m7" class="modal px-4" onclick="closeModal('m7')">
-        <div class="bg-slate-900 border border-cyan-500/30 p-8 rounded-[2.5rem] max-w-md w-full relative" onclick="event.stopPropagation()">
-            <h3 class="text-xl font-bold mb-6 text-cyan-400 text-center">دليل نظام وثيق الذكي</h3>
-            <ul class="text-right space-y-4 text-slate-300 text-sm">
-                <li class="flex gap-3"><span>1️⃣</span> ارفع الوثيقة أو استمارة البيانات المراد تحليلها (تحصيل، زيارات، تقارير).</li>
-                <li class="flex gap-3"><span>2️⃣</span> اختر نوع وطبيعة التحليل المناسبة لاحتياجك من الخيارات المتاحة.</li>
-                <li class="flex gap-3"><span>3️⃣</span> دع النظام يستخرج البيانات بعمق ويحولها لرؤى استراتيجية وتوصيات فورية.</li>
-            </ul>
-            <button onclick="closeModal('m7')" class="mt-8 w-full py-3 bg-cyan-600 rounded-xl font-bold">فهمت ذلك</button>
-        </div>
-    </div>
+    function focusSearch(){
+      document.getElementById('tools').scrollIntoView({ behavior:'smooth', block:'start' });
+      setTimeout(() => searchInput.focus(), 500);
+    }
 
-    <div id="m8" class="modal px-4" onclick="closeModal('m8')">
-        <div class="bg-slate-900 border border-orange-500/30 p-8 rounded-[2.5rem] max-w-md w-full relative" onclick="event.stopPropagation()">
-            <h3 class="text-xl font-bold mb-6 text-orange-400 text-center">دليل نظام متقن للجان</h3>
-            <ul class="text-right space-y-4 text-slate-300 text-sm">
-                <li class="flex gap-3"><span>1️⃣</span> ادخل قوائم المعلمين المتوفرين للمراقبة في اللجان.</li>
-                <li class="flex gap-3"><span>2️⃣</span> حدد أعداد لجان الامتحانات المتاحة والفترات الزمنية.</li>
-                <li class="flex gap-3"><span>3️⃣</span> دع النظام يوزع المراقبة آلياً لضمان العدالة وتفادي تكرار الأسماء.</li>
-            </ul>
-            <button onclick="closeModal('m8')" class="mt-8 w-full py-3 bg-orange-600 rounded-xl font-bold">فهمت ذلك</button>
-        </div>
-    </div>
+    document.addEventListener('keydown', (event) => {
+      if(event.key === 'Escape') closeModal();
+    });
 
-    <div id="m9" class="modal px-4" onclick="closeModal('m9')">
-        <div class="bg-slate-900 border border-teal-500/30 p-8 rounded-[2.5rem] max-w-md w-full relative" onclick="event.stopPropagation()">
-            <h3 class="text-xl font-bold mb-6 text-teal-400 text-center">دليل بوابة ملفات أعمال المعلمين</h3>
-            <ul class="text-right space-y-4 text-slate-300 text-sm">
-                <li class="flex gap-3"><span>1️⃣</span> يدخل المعلم إلى البوابة ويرفع ملفاته أو شواهده المهنية حسب التصنيف المطلوب.</li>
-                <li class="flex gap-3"><span>2️⃣</span> تُحفظ الملفات بشكل منظم ليسهل الرجوع إليها ومراجعتها في أي وقت.</li>
-                <li class="flex gap-3"><span>3️⃣</span> تتابع الإدارة ملفات المعلمين وتديرها من لوحة خاصة بطريقة سريعة ومنظمة.</li>
-            </ul>
-            <button onclick="closeModal('m9')" class="mt-8 w-full py-3 bg-teal-600 rounded-xl font-bold">فهمت ذلك</button>
-        </div>
-    </div>
-
-    <footer class="py-12 border-t border-white/5 text-center bg-black/20">
-        <p class="text-slate-500 text-[10px] mb-4">تم التطوير بواسطة أ. سعود المعولي © 2026</p>
-        <a href="https://wa.me/96896669096" class="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-8 py-3 rounded-full border border-emerald-500/20 hover:bg-emerald-500/20 transition-all font-bold text-xs uppercase tracking-widest">
-            <span>💬</span> WhatsApp Contact
-        </a>
-    </footer>
-
-    <script>
-        function showModal(id) { document.getElementById(id).classList.add('active'); }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-    </script>
-
+    createFilters();
+    renderTools();
+  </script>
 </body>
 </html>
