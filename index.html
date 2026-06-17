@@ -46,7 +46,7 @@
 
     <section class="max-w-4xl mx-auto mb-16 grid grid-cols-3 gap-4 px-6 text-center">
         <div class="p-4 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
-            <div class="text-2xl font-black text-blue-400">7</div>
+            <div class="text-2xl font-black text-blue-400">9</div>
             <div class="text-[10px] text-slate-400 uppercase">أدوات ذكية</div>
         </div>
         <div class="p-4 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
@@ -113,7 +113,7 @@
             <span class="px-3 py-1 mb-4 rounded-full bg-amber-500/20 text-amber-400 text-[10px] font-bold uppercase">قياس وتقويم</span>
             <span class="text-5xl mb-4">📊</span>
             <h2 class="text-xl font-bold mb-3 text-amber-400">محلل الورقة</h2>
-            <p class="text-slate-400 text-xs leading-relaxed mb-6 h-16">نظام رقمي لتحليل مواصفات الورقة لضشان دقة المعايير الوزارية بعُمان.</p>
+            <p class="text-slate-400 text-xs leading-relaxed mb-6 h-16">نظام رقمي لتحليل مواصفات الورقة لضمان دقة المعايير الوزارية بعُمان.</p>
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://moeom.my.canva.site/saudex" class="qr-bg w-20 h-20 mb-6 shadow-lg shadow-amber-500/10">
             <div class="flex gap-2 mt-auto w-full">
                 <a href="https://moeom.my.canva.site/saudex" target="_blank" class="flex-1 bg-amber-600 hover:bg-amber-700 py-2 rounded-xl text-xs font-bold transition-all text-center">فتح الأداة</a>
@@ -154,6 +154,18 @@
             <div class="flex gap-2 mt-auto w-full">
                 <a href="https://invigilation-app-exam.vercel.app/" target="_blank" class="flex-1 bg-orange-600 hover:bg-orange-700 py-2 rounded-xl text-xs font-bold transition-all text-center">فتح الأداة</a>
                 <button onclick="showModal('m8')" class="flex-1 bg-white/10 hover:bg-white/20 py-2 rounded-xl text-xs font-bold border border-white/10">كيف تعمل؟</button>
+            </div>
+        </div>
+
+        <div class="group p-8 rounded-[2.5rem] bg-white/5 border border-white/10 card-glow flex flex-col items-center text-center transition-all">
+            <span class="px-3 py-1 mb-4 rounded-full bg-teal-500/20 text-teal-400 text-[10px] font-bold uppercase">إدارة مدرسية</span>
+            <span class="text-5xl mb-4">🗂️</span>
+            <h2 class="text-xl font-bold mb-3 text-teal-400">بوابة ملفات أعمال المعلمين</h2>
+            <p class="text-slate-400 text-xs leading-relaxed mb-6 h-16">منصة رقمية لحفظ وتنظيم ملفات أعمال المعلمين ورفعها ومتابعتها من قبل الإدارة المدرسية.</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https%3A%2F%2Falbasit-teachers-portfolio.vercel.app%2F" class="qr-bg w-20 h-20 mb-6 shadow-lg shadow-teal-500/10">
+            <div class="flex gap-2 mt-auto w-full">
+                <a href="https://albasit-teachers-portfolio.vercel.app/" target="_blank" class="flex-1 bg-teal-600 hover:bg-teal-700 py-2 rounded-xl text-xs font-bold transition-all text-center">فتح الأداة</a>
+                <button onclick="showModal('m9')" class="flex-1 bg-white/10 hover:bg-white/20 py-2 rounded-xl text-xs font-bold border border-white/10">كيف تعمل؟</button>
             </div>
         </div>
 
@@ -252,6 +264,18 @@
                 <li class="flex gap-3"><span>3️⃣</span> دع النظام يوزع المراقبة آلياً لضمان العدالة وتفادي تكرار الأسماء.</li>
             </ul>
             <button onclick="closeModal('m8')" class="mt-8 w-full py-3 bg-orange-600 rounded-xl font-bold">فهمت ذلك</button>
+        </div>
+    </div>
+
+    <div id="m9" class="modal px-4" onclick="closeModal('m9')">
+        <div class="bg-slate-900 border border-teal-500/30 p-8 rounded-[2.5rem] max-w-md w-full relative" onclick="event.stopPropagation()">
+            <h3 class="text-xl font-bold mb-6 text-teal-400 text-center">دليل بوابة ملفات أعمال المعلمين</h3>
+            <ul class="text-right space-y-4 text-slate-300 text-sm">
+                <li class="flex gap-3"><span>1️⃣</span> يدخل المعلم إلى البوابة ويرفع ملفاته أو شواهده المهنية حسب التصنيف المطلوب.</li>
+                <li class="flex gap-3"><span>2️⃣</span> تُحفظ الملفات بشكل منظم ليسهل الرجوع إليها ومراجعتها في أي وقت.</li>
+                <li class="flex gap-3"><span>3️⃣</span> تتابع الإدارة ملفات المعلمين وتديرها من لوحة خاصة بطريقة سريعة ومنظمة.</li>
+            </ul>
+            <button onclick="closeModal('m9')" class="mt-8 w-full py-3 bg-teal-600 rounded-xl font-bold">فهمت ذلك</button>
         </div>
     </div>
 
