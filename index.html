@@ -114,11 +114,11 @@
 
     .hero-title{
       font-family:'Alexandria', 'Cairo', sans-serif;
-      font-size:clamp(2rem, 3.25vw, 3.35rem);
-      line-height:1.32;
+      font-size:clamp(2.35rem, 5vw, 4.65rem);
+      line-height:1.24;
       font-weight:800;
-      max-width:100%;
-      text-wrap:balance;
+      max-width:10.5ch;
+      text-wrap:pretty;
       background:linear-gradient(135deg, #16443c 0%, #8a6a39 52%, #2a554c 100%);
       -webkit-background-clip:text;
       background-clip:text;
@@ -126,15 +126,10 @@
       letter-spacing:0;
     }
 
-    .hero-title .title-main,
-    .hero-title .title-sub{
-      display:block;
-      white-space:nowrap;
-    }
 
-    .hero-title .title-sub{
-      margin-top:.08em;
-      font-size:.95em;
+    .title-line-2{
+      display:inline-block;
+      padding-top:.18em;
     }
 
     .hero-desc{
@@ -390,7 +385,13 @@
       .hero-title .title-sub{
         white-space:normal;
       }
-      .hero-desc{
+  
+    .title-line-2{
+      display:inline-block;
+      padding-top:.18em;
+    }
+
+    .hero-desc{
         font-size:.98rem;
         line-height:1.95;
       }
@@ -402,6 +403,108 @@
       .float-card.main{ right:50%; translate:50% 0; width:min(18rem, 90vw); }
       .float-card.small{ right:1rem; top:12.2rem; }
       .float-card.qr{ left:1rem; top:12rem; }
+    }
+
+
+
+    @media (max-width: 1024px){
+      .hero-card{
+        text-align:center;
+        gap:1.5rem;
+      }
+      .hero-title{
+        margin-inline:auto;
+        font-size:clamp(2.1rem, 5.6vw, 3rem);
+      }
+      .hero-desc{
+        margin-inline:auto;
+        max-width:38rem;
+      }
+      .hero-card .flex.flex-wrap{
+        justify-content:center;
+      }
+      .hero-card .flex.flex-col.sm\:flex-row{
+        justify-content:center;
+      }
+      .badge-soft{
+        margin-inline:auto;
+      }
+      .floating-suite{
+        max-width:36rem;
+        margin-inline:auto;
+      }
+    }
+
+    @media (max-width: 768px){
+      .shell{
+        padding-inline:1rem;
+      }
+      .topbar{
+        top:.65rem;
+        margin:.65rem .75rem 0;
+        padding:.6rem;
+      }
+      .hero-card{
+        border-radius:1.8rem;
+        padding:1.5rem;
+      }
+      .hero-title{
+        font-size:clamp(1.9rem, 7.2vw, 2.55rem);
+        line-height:1.25;
+      }
+      .hero-desc{
+        font-size:.96rem;
+        line-height:1.9;
+      }
+      .stat-card{
+        border-radius:1.15rem;
+      }
+      .toolbar{
+        border-radius:1.25rem;
+      }
+      .tool-card{
+        min-height:auto;
+        border-radius:1.55rem;
+      }
+      .tool-card .card-inner{
+        padding:1.25rem;
+      }
+    }
+
+    @media (max-width: 460px){
+      .hero-card{
+        padding:1.15rem;
+      }
+      .hero-title{
+        font-size:2rem;
+        line-height:1.24;
+      }
+      .hero-title .title-main,
+      .hero-title .title-sub{
+        white-space:normal;
+      }
+      .badge-soft{
+        font-size:.68rem;
+        padding:.55rem .75rem;
+      }
+      .qr-wrap{
+        flex-direction:column;
+        text-align:center;
+      }
+      .qr-wrap .text-right{
+        text-align:center;
+      }
+      .icon-3d{
+        width:4.6rem;
+        height:4.6rem;
+        font-size:2.25rem;
+      }
+      .modal-content{
+        padding:1.2rem;
+      }
+      .modal-panel{
+        border-radius:1.45rem;
+      }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -432,7 +535,7 @@
     </div>
   </nav>
 
-  <header id="top" class="shell pt-14 md:pt-20 pb-10">
+  <header id="top" class="shell pt-10 md:pt-16 lg:pt-20 pb-10">
     <div class="hero-card grid lg:grid-cols-[1.08fr_.92fr] gap-8 p-6 md:p-10 lg:p-12 items-center">
       <div class="relative z-10">
         <div class="badge-soft inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-black text-[#16443c] mb-6">
@@ -697,7 +800,7 @@
               </div>
               <img src="${qrUrl(tool.url)}" alt="QR ${tool.title}" class="qr-img" loading="lazy" />
             </div>
-            <div class="grid grid-cols-2 gap-3 mt-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-auto">
               <a href="${tool.url}" target="_blank" rel="noopener" class="open-btn text-center rounded-2xl px-4 py-3 font-black text-sm transition">فتح الأداة</a>
               <button onclick="showModal('${tool.id}')" class="guide-btn rounded-2xl px-4 py-3 font-black text-sm transition">كيف تعمل؟</button>
             </div>
