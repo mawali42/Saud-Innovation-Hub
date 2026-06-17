@@ -114,11 +114,11 @@
 
     .hero-title{
       font-family:'Alexandria', 'Cairo', sans-serif;
-      font-size:clamp(2.35rem, 5vw, 4.65rem);
-      line-height:1.24;
+      font-size:clamp(2rem, 3.25vw, 3.35rem);
+      line-height:1.32;
       font-weight:800;
-      max-width:10.5ch;
-      text-wrap:pretty;
+      max-width:100%;
+      text-wrap:balance;
       background:linear-gradient(135deg, #16443c 0%, #8a6a39 52%, #2a554c 100%);
       -webkit-background-clip:text;
       background-clip:text;
@@ -126,10 +126,15 @@
       letter-spacing:0;
     }
 
+    .hero-title .title-main,
+    .hero-title .title-sub{
+      display:block;
+      white-space:nowrap;
+    }
 
-    .title-line-2{
-      display:inline-block;
-      padding-top:.18em;
+    .hero-title .title-sub{
+      margin-top:.08em;
+      font-size:.95em;
     }
 
     .hero-desc{
@@ -378,17 +383,14 @@
 
     @media (max-width: 640px){
       .hero-title{
-        max-width:100%;
-        font-size:clamp(2rem, 10vw, 2.8rem);
-        line-height:1.2;
+        font-size:clamp(1.85rem, 8.4vw, 2.55rem);
+        line-height:1.28;
       }
-  
-    .title-line-2{
-      display:inline-block;
-      padding-top:.18em;
-    }
-
-    .hero-desc{
+      .hero-title .title-main,
+      .hero-title .title-sub{
+        white-space:normal;
+      }
+      .hero-desc{
         font-size:.98rem;
         line-height:1.95;
       }
@@ -438,7 +440,8 @@
           <span>رؤية عُمان 2040 | AI & Web Tools</span>
         </div>
         <h1 class="hero-title mb-5">
-          منصة الابتكار<br><span class="title-line-2">التربوي</span>
+          <span class="title-main">منصة الابتكار</span>
+          <span class="title-sub">التربوي</span>
         </h1>
         <p class="hero-desc mb-8">
           واجهة موحدة تجمع تطبيقاتك التربوية في تجربة عصرية ومنظمة، وتمنح المعلمين والإدارة المدرسية وصولاً سريعًا وواضحًا إلى الأدوات.
