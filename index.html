@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;700;800;900&family=Cairo:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg: #f6eedf;
@@ -24,7 +24,7 @@
     *{ box-sizing:border-box; }
     html{ scroll-behavior:smooth; }
     body{
-      font-family:'Cairo', sans-serif;
+      font-family:'Alexandria', 'Cairo', sans-serif;
       background:
         radial-gradient(circle at top right, rgba(184,135,70,.28), transparent 34rem),
         radial-gradient(circle at 12% 18%, rgba(22,68,60,.18), transparent 30rem),
@@ -113,11 +113,31 @@
     }
 
     .hero-title{
-      background:linear-gradient(90deg, #16443c, #b88746, #284b43);
+      font-family:'Alexandria', 'Cairo', sans-serif;
+      font-size:clamp(2.35rem, 5vw, 4.65rem);
+      line-height:1.24;
+      font-weight:800;
+      max-width:10.5ch;
+      text-wrap:pretty;
+      background:linear-gradient(135deg, #16443c 0%, #8a6a39 52%, #2a554c 100%);
       -webkit-background-clip:text;
       background-clip:text;
       color:transparent;
-      letter-spacing:-.04em;
+      letter-spacing:0;
+    }
+
+
+    .title-line-2{
+      display:inline-block;
+      padding-top:.18em;
+    }
+
+    .hero-desc{
+      max-width:34rem;
+      color:#63584c;
+      font-size:1.05rem;
+      line-height:2.05;
+      font-weight:500;
     }
 
     .badge-soft{
@@ -355,6 +375,25 @@
 
     .shine-text{ color:#fff9ef; text-shadow:0 2px 14px rgba(0,0,0,.18); }
 
+
+    @media (max-width: 640px){
+      .hero-title{
+        max-width:100%;
+        font-size:clamp(2rem, 10vw, 2.8rem);
+        line-height:1.2;
+      }
+  
+    .title-line-2{
+      display:inline-block;
+      padding-top:.18em;
+    }
+
+    .hero-desc{
+        font-size:.98rem;
+        line-height:1.95;
+      }
+    }
+
     @media (max-width: 900px){
       .topbar{ margin-inline:1rem; border-radius:1.25rem; }
       .floating-suite{ min-height:260px; margin-top:1rem; }
@@ -380,7 +419,7 @@
       <a href="#top" class="flex items-center gap-3">
         <span class="w-11 h-11 rounded-2xl grid place-items-center text-2xl shadow-lg" style="background:linear-gradient(135deg,#16443c,#b88746);">✨</span>
         <div>
-          <div class="font-black text-sm md:text-base text-[#16443c]">منصة الابتكار التربوي</div>
+          <div class="font-extrabold text-[15px] md:text-[17px] tracking-tight text-[#16443c]">منصة الابتكار التربوي</div>
           <div class="text-[11px] text-[#756a5d]">أدوات رقمية للمدرسة والمعلم</div>
         </div>
       </a>
@@ -398,11 +437,11 @@
           <span>🇴🇲</span>
           <span>رؤية عُمان 2040 | AI & Web Tools</span>
         </div>
-        <h1 class="hero-title text-4xl md:text-6xl lg:text-7xl font-black leading-[1.15] mb-6">
-          منصة الابتكار التربوي
+        <h1 class="hero-title mb-5">
+          منصة الابتكار<br><span class="title-line-2">التربوي</span>
         </h1>
-        <p class="text-[#5f554a] text-base md:text-lg leading-9 max-w-2xl font-medium mb-8">
-          واجهة موحدة تجمع تطبيقاتك التربوية في تجربة عصرية، منظمة، وسهلة الوصول للمعلمين والإدارة المدرسية.
+        <p class="hero-desc mb-8">
+          واجهة موحدة تجمع تطبيقاتك التربوية في تجربة عصرية ومنظمة، وتمنح المعلمين والإدارة المدرسية وصولاً سريعًا وواضحًا إلى الأدوات.
         </p>
         <div class="flex flex-wrap items-center gap-3 mb-8">
           <span class="px-4 py-2 rounded-full bg-white/55 border border-white/60 text-sm font-extrabold text-[#16443c]">أ. سعود المعولي</span>
