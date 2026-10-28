@@ -567,7 +567,7 @@
       <div class="floating-suite relative z-10 hidden sm:block" aria-hidden="true">
         <div class="float-card main">
           <div class="h-10 w-10 rounded-2xl grid place-items-center text-2xl mb-4" style="background:linear-gradient(135deg,#efe0c5,#fff9ef); box-shadow:inset 0 1px 0 #fff;">🗂️</div>
-          <div class="font-black text-2xl text-[#16443c] mb-2">13 أداة ذكية</div>
+          <div class="font-black text-2xl text-[#16443c] mb-2"><span id="heroCount">12</span> أداة ذكية</div>
           <p class="text-sm text-[#756a5d] leading-7">بوابة أنيقة للوصول إلى التحضير، التحليل، التقويم، اللجان، وملفات المعلمين.</p>
           <div class="mt-5 h-2 rounded-full bg-[#e8d8bd] overflow-hidden">
             <div class="h-full w-[92%] rounded-full" style="background:linear-gradient(90deg,#16443c,#b88746);"></div>
@@ -589,7 +589,7 @@
   <section class="shell pb-8">
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
       <div class="stat-card p-5 text-center">
-        <div id="appsCount" class="text-4xl font-black text-[#16443c]">11</div>
+        <div id="appsCount" class="text-4xl font-black text-[#16443c]">12</div>
         <div class="text-xs text-[#756a5d] font-bold mt-1">أدوات وتطبيقات</div>
       </div>
       <div class="stat-card p-5 text-center">
@@ -653,18 +653,8 @@
   <script>
     const tools = [
       {
-        id:'arabic-planner',
-        title:'المفكر التربوي',
-        category:'ذكاء اصطناعي',
-        icon:'✍️',
-        color:'#2f6fde',
-        url:'https://arabic-lesson-planner.vercel.app',
-        description:'نسخة اللغة العربية لتوليد تحضير ذكي متكامل وفق معايير الوزارة.',
-        steps:['أدخل عنوان الدرس والأهداف التعليمية.','اختر الصف والمستوى الدراسي المستهدف.','استخرج خطة درس منظمة وقابلة للتعديل.']
-      },
-      {
         id:'universal-planner',
-        title:'المفكر الشامل',
+        title:'المفكر التربوي',
         category:'ذكاء اصطناعي',
         icon:'🌍',
         color:'#7c3aed',
@@ -801,6 +791,7 @@
     const emptyState = document.getElementById('emptyState');
     const searchInput = document.getElementById('searchInput');
     document.getElementById('appsCount').textContent = tools.length;
+    document.getElementById('heroCount').textContent = tools.length;
 
     function createFilters(){
       filters.innerHTML = categoryLabels.map(cat => `
